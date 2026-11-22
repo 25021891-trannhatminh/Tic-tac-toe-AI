@@ -98,8 +98,8 @@ class Minimax_Agent:
             if not stones: 
                 return [(game.size//2,game.size//2)]
             near = [action for action in actions
-                    if any(abs(action[0]-r), abs(action[1]-c))<= self.radius
-                    for r,c in stones]
+                    if any(max(abs(action[0]-r), abs(action[1]-c))<= self.radius for r,c in stones)]
+            
             if near:
                 actions = near 
             else:

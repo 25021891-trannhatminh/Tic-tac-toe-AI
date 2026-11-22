@@ -124,7 +124,7 @@ class Minimax_Agent:
                     if not (0 <= end_r < n and 0<= end_c<n):
                         continue 
 
-                    of_player , of_opponent = 0 
+                    of_player = of_opponent = 0 
                     for i in range(k):
                         value = board[r+dr*i][c+dc*i]
                         if value == player: 

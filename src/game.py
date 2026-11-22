@@ -25,7 +25,7 @@ class Game:
 
     def initial_state(self):
         board = tuple(tuple([0]*self.size) for _ in range(self.size))
-        return (board,1) # X firest
+        return (board,1) # X first
 
     def legal_actions(self,state):
         board,_ = state
@@ -94,6 +94,7 @@ class Game:
         return self.get_winner(state,last_action) is not None or self.is_full(state)
 
     def rollout(self,state):
+        #Edge case 
         winner = self.get_winner(state)
         if winner is not None:
             return winner 
@@ -113,7 +114,7 @@ class Game:
             if self.wins_at(board, r, c):
                 return player
             player = -player
-        return None
+        
 
     #VISUALIZATION
     def render(self, state):

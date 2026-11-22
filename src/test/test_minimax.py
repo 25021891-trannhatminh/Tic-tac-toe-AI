@@ -1,7 +1,5 @@
-
-from game import Game
-from minimax import Minimax_Agent
-
+from src.game import Game
+from src.minimax import Minimax_Agent
 g = Game(10, 5)
 x_agent = Minimax_Agent(g, max_depth=3, radius=1)
 o_agent = Minimax_Agent(g, max_depth=3, radius=1)

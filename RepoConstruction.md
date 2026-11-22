@@ -10,4 +10,5 @@ Tic-tac-toe-AI/
 ├─ demo/               # UI
 ├─ tests/              # test get_winner, minimax, v.v.
 ├─ report/             # IEEE
+├── requirements.txt              # numpy, pandas
 └─ README.md

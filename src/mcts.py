@@ -1,6 +1,6 @@
 import math
 import random
-from heuristic_rollout import heuristic_rollout
+from .heuristic_rollout import heuristic_rollout
 
 class Node:
     def __init__(self, state, parent=None, action=None, game=None, radius=None):

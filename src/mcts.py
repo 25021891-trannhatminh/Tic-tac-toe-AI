@@ -1,5 +1,6 @@
 import math
 import random
+from heuristic_rollout import heuristic_rollout
 
 class Node:
     def __init__(self, state, parent=None, action=None, game=None, radius=None):
@@ -34,7 +35,7 @@ class Node:
 
 
 class MCTS_Agent:
-    def __init__(self, game, iterations=1000, c=math.sqrt(2), seed=None, radius=None):
+    def __init__(self, game, iterations=1000, c=math.sqrt(2), seed=None, radius=None, rollout_type = "random"):
         """
         game       : Game Object
         iterations : số vòng lặp MCTS cho mỗi nước đi
@@ -47,6 +48,7 @@ class MCTS_Agent:
         self.iterations = iterations
         self.c = c
         self.root = None
+        self.rollout_type = rollout_type
         if seed is not None:
             random.seed(seed)
 
@@ -71,7 +73,10 @@ class MCTS_Agent:
         """3. Simulate a game until end + Return winner/None"""
         if node.is_terminal:
             return node.winner
-        return self.game.rollout(node.state)
+        if self.rollout_type == "heuristic":
+            return heuristic_rollout(self.game, node.state)
+        else: # self.rollout_type == "random"
+            return self.game.rollout(node.state)
 
     def _backpropagate(self, node, winner):
         """4. Update W,N from leaf to root"""

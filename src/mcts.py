@@ -7,9 +7,9 @@ class Node:
         self.parent = parent
         self.action = action                 # last action của Parent Node
         self.childrens = []                  # list Child Node
-        self.N = 0                           # số lần thăm
-        self.W = 0.0                         # số lần win
-        self.player = state[1]
+        self.N = 0                           # số lần thăm Node
+        self.W = 0.0                         # số lần win Node khi simulate
+        self.parent_player = - state[1]      # Player từ Parent (NOTE: Do W = số lần win nếu parent_player chọn Node này -> winner_simulate = parent_player)
 
         # Check game done ?
         if action is not None:
@@ -77,7 +77,7 @@ class MCTS_Agent:
             node.N += 1
             if winner is None:
                 node.W += 0.5
-            elif winner == node.player:
+            elif winner == node.parent_player:
                 node.W += 1.0
             node = node.parent
 

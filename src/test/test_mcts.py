@@ -1,5 +1,6 @@
 from src.game import Game
 from src.mcts import MCTS_Agent
+
 game = Game(10, 5)
 x_player = MCTS_Agent(game = game, seed = 1)
 o_player = MCTS_Agent(game = game, seed = 1)

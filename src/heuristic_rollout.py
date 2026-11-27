@@ -1,24 +1,23 @@
-from game import Game
 import random
-def heuristic_rollout(state):
-    winner  = Game.get_winner(state)
+def heuristic_rollout(game,state):
+    winner  = game.get_winner(state)
     if winner is not None:
         return winner 
 
     board = [list(row) for row in state[0]]
     player = state[1] # about to take action  
     empties = [ (row,column)
-               for row in range(Game.size)
-               for column in range(Game.size)
+               for row in range(game.size)
+               for column in range(game.size)
                if board[row][column] == 0]
 
     def fast_win(player):
         for row,col in empties:
             board[row][col] = player 
-            can_win = Game.wins_at(board,row,col)
+            can_win = game.wins_at(board,row,col)
             board[row][col] = 0 # Undo 
             if can_win : 
-                return (row,col)
+                return player 
         return None 
 
     while empties:
@@ -27,8 +26,8 @@ def heuristic_rollout(state):
         empties.remove(move)
         row , col = move 
         board[row][col] = player
-        if Game.wins_at(board,row,col):
-            return (row,col)
+        if game.wins_at(board,row,col):
+            return player
         player = -player 
 
     #IF NO WINNER 

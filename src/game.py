@@ -49,7 +49,7 @@ class Game:
         """ True if (r,c) is in a loop-sequence >= win_length"""
         player = board[r][c]
         if player == 0 : 
-            return None 
+            return False
         for dr,dc in self.DIRECTIONS:
             count = 1
 
@@ -114,6 +114,7 @@ class Game:
             if self.wins_at(board, r, c):
                 return player
             player = -player
+        return None     
         
 
     #VISUALIZATION

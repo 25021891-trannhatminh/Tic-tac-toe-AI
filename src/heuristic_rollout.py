@@ -22,6 +22,7 @@ def heuristic_rollout(state):
         return None 
 
     while empties:
+        # Fast Win --> Block (Fast Win Of Opponent) --> Random Choice
         move  = fast_win(player) or fast_win(-player) or  random.choice(empties)
         empties.remove(move)
         row , col = move 

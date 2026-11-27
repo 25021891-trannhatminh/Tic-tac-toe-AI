@@ -17,7 +17,7 @@ def heuristic_rollout(game,state):
             can_win = game.wins_at(board,row,col)
             board[row][col] = 0 # Undo 
             if can_win : 
-                return player 
+                return (row,col)
         return None 
 
     while empties:

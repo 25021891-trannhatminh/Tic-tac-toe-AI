@@ -20,7 +20,7 @@ class Minimax_Agent:
     def best_move(self,state):
         """Return best move for the player taking turn """
         self.nodes =0 
-        player =state[1]
+        player = state[1]
         best_action, best_value = None, -m.inf
         alpha,beta = -m.inf, m.inf
         depth = self.max_depth if self.max_depth is not None else m.inf 
@@ -43,7 +43,7 @@ class Minimax_Agent:
             if winner == player: 
                 return self.WIN + bonus 
             else:
-                return -(self.WIN+ bonus)
+                return -(self.WIN  + bonus)
 
         if game.is_full(state):
             return 0 

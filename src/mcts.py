@@ -2,7 +2,7 @@ import math
 import random
 
 class Node:
-    def __init__(self, state, parent=None, action=None, game=None):
+    def __init__(self, state, parent=None, action=None, game=None, radius=None):
         self.state = state                   # current state = (board,player)
         self.parent = parent
         self.action = action                 # last action của Parent Node
@@ -19,7 +19,7 @@ class Node:
         self.is_terminal = (self.winner is not None) or game.is_full(state)
 
         # Create new actions []
-        self.untried_actions = [] if self.is_terminal else game.legal_actions(state)
+        self.untried_actions = [] if self.is_terminal else game.candidate_actions(state, radius)
         random.shuffle(self.untried_actions)
 
     def is_fully_expanded(self):
@@ -34,14 +34,16 @@ class Node:
 
 
 class MCTS_Agent:
-    def __init__(self, game, iterations=1000, c=math.sqrt(2), seed=None):
+    def __init__(self, game, iterations=1000, c=math.sqrt(2), seed=None, radius=None):
         """
         game       : Game Object
         iterations : số vòng lặp MCTS cho mỗi nước đi
         c          : const = sqrt(2)
         seed       : đặt seed lặp lại kết quả (để test)
+        radius     : None = xét mọi ô trống; số = chỉ xét ô cách quân đã đánh <= radius
         """
         self.game = game
+        self.radius = radius
         self.iterations = iterations
         self.c = c
         self.root = None
@@ -61,7 +63,7 @@ class MCTS_Agent:
             return node
         action = node.untried_actions.pop()
         child_state = self.game.next_state(node.state, action)
-        child_node = Node(child_state, parent=node, action=action, game=self.game)
+        child_node = Node(child_state, parent=node, action=action, game=self.game, radius=self.radius)
         node.childrens.append(child_node)
         return child_node
 
@@ -84,7 +86,7 @@ class MCTS_Agent:
     # Combination
     def best_move(self, state):
         """Chạy MCTS từ `state`, return action = (row, col) có số lần thăm lớn nhất."""
-        self.root = Node(state, game=self.game)
+        self.root = Node(state, game=self.game, radius=self.radius)
         if self.root.is_terminal:
             raise ValueError("State is terminal")
 

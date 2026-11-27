@@ -36,6 +36,28 @@ class Game:
             if board[r][c] == 0
         ]
     
+    def candidate_actions(self, state, radius=None):
+        """Blank pixels within `radius` of any placed stone.
+        radius=None -> all legal actions. Empty board -> center pixel."""
+        actions = self.legal_actions(state)
+        if radius is None:
+            return actions
+        board, _ = state
+        near_stone = set()
+        has_stone = False
+        for row in range(self.size):
+            for col in range(self.size):
+                if board[row][col] != 0:
+                    has_stone = True
+                    for near_r in range(max(0, row - radius), min(self.size, row + radius + 1)):
+                        for near_c in range(max(0, col - radius), min(self.size, col + radius + 1)):
+                            near_stone.add((near_r, near_c))
+        if not has_stone:
+            return [(self.size // 2, self.size // 2)]
+        filtered = [a for a in actions if a in near_stone]
+        return filtered or actions
+    
+
     def next_state(self, state, action):
         board, player = state
         r, c = action

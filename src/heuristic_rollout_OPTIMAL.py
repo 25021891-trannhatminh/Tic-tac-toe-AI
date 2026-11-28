@@ -27,8 +27,8 @@ def heuristic_rollout(game, state):
     threat_cells = {1: set(), -1: set()} # Threat alerting (when opponent is about to have 2-HEAD-OPENED - (LENGTH = 4) SEQUENCE) ~ Detecting 2-HEAD-OPENED-(LENGTH = 3) SEQUENCE
 
 
-    def add_frontier(rol, col):
-        for near_r in range(max(0, rol - 1), min(size, rol + 2)):
+    def add_frontier(row, col):
+        for near_r in range(max(0, row - 1), min(size, row + 2)):
             for near_c in range(max(0, col - 1), min(size, col + 2)):
                 if board[near_r][near_c] == 0:
                     cell = (near_r, near_c)
@@ -37,7 +37,7 @@ def heuristic_rollout(game, state):
                         frontier.append(cell)
 
     def remove_frontier(cell):
-        index = f_index.pop(cell)
+        index = f_index.pop(cell, None)
         if index is not None:
             last_cell = frontier.pop()
             if last_cell != cell:

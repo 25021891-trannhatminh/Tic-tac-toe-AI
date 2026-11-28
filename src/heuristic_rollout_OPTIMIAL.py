@@ -113,8 +113,8 @@ def heuristic_rollout(game, state):
                 new_r_2, new_c_2 = near_r_2 - diff_r, near_c_2 - diff_c
                 while 0 <= new_r_2 < size and 0 <= new_c_2 < size and board[new_r_2][new_c_2] == player:
                     extra_2 += 1
-                    new_r_1 -= diff_r
-                    new_c_1 -= diff_c
+                    new_r_2 -= diff_r
+                    new_c_2 -= diff_c
                 total_2 = mid_sequence + 1 + extra_2    # +1 : Blank pixel
 
                 if total_2 >= win_len:

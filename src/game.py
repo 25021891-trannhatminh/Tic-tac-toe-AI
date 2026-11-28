@@ -76,16 +76,16 @@ class Game:
             count = 1
 
             nr,nc = r + dr,c + dc
-            while 0<= nr <self.size and 0<= nc < self.size and board[nr][nc] == player: 
+            while 0 <= nr < self.size and 0<= nc < self.size and board[nr][nc] == player: 
                 count +=1 
                 nr += dr 
                 nc += dc 
 
             nr,nc = r-dr,c-dc
-            while 0<= nr <self.size and 0<= nc < self.size and board[nr][nc] == player: 
+            while 0 <= nr <self.size and 0 <= nc < self.size and board[nr][nc] == player: 
                 count +=1 
-                nr -=dr
-                nc -=dc
+                nr -= dr
+                nc -= dc
 
             if count >= self.win_length:
                 return True 

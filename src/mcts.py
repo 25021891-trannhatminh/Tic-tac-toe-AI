@@ -1,6 +1,6 @@
 import math
 import random
-from .heuristic_rollout import heuristic_rollout
+from .heuristic_rollout_OPTIMIAL import heuristic_rollout
 
 class Node:
     def __init__(self, state, parent=None, action=None, game=None, radius=None):
@@ -20,7 +20,23 @@ class Node:
         self.is_terminal = (self.winner is not None) or game.is_full(state)
 
         # Create new actions []
-        self.untried_actions = [] if self.is_terminal else game.candidate_actions(state, radius)
+        if self.is_terminal:
+            self.untried_actions = []
+        else:
+            actions = game.candidate_actions(state,radius)
+            """
+            If there is a win-now move in actions , prioring it first
+            """
+            win_move = None
+            board,player = state 
+            board_copy = [list(r) for r in board]
+            for row, col in actions:
+                board_copy[row][col] = player
+                if game.wins_at(board_copy,row,col):
+                    win_move = (row,col)
+                    break 
+                board_copy[row][col] = 0
+            self.untried_actions =[win_move] if win_move else actions
         random.shuffle(self.untried_actions)
 
     def is_fully_expanded(self):

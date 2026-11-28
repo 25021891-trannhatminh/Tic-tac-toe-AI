@@ -55,7 +55,9 @@ class MCTS_Agent:
     # SELECT - EXPAND - SIMULATE - BACKPROPAGATE
     def _select(self, node):
         """1. Traverse DFS theo UCT từ `node` -> Leaf """
-        while not node.is_terminal and node.is_fully_expanded():
+        while not node.is_terminal:
+            if not node.is_fully_expanded():
+                return node
             node = max(node.childrens, key=lambda child_node: child_node.uct_value(self.c))
         return node
 
